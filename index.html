@@ -20,6 +20,7 @@ input,select{width:100%;background:#120f0c;color:var(--txt);border:1px solid var
 .seg{display:flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}
 .seg button{flex:1;background:#120f0c;color:var(--dim);border:0;padding:9px 0;font-size:14px;font-family:inherit;cursor:pointer}
 .seg button.on{background:var(--gold);color:#241c11;font-weight:700}
+.hint{font-size:11px;color:#6f6660;margin-top:6px;line-height:1.6}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
 .chips span{border:1px solid var(--line);border-radius:18px;padding:6px 14px;font-size:13px;color:var(--dim);cursor:pointer;user-select:none}
 .chips span.on{border-color:var(--gold);color:#241c11;background:var(--gold);font-weight:600}
@@ -75,9 +76,9 @@ th.rh{width:52px}
       <div style="display:flex;gap:6px"><input type="number" id="ly" value="1990" style="flex:1.1">
       <select id="lm" style="flex:1"></select><select id="ld" style="flex:1"></select></div>
       <label style="margin-top:6px"><input type="checkbox" id="lp" style="width:auto"> 闰月</label></div>
-    <div><label>出生时间</label><input type="time" id="tm" value="14:30"></div>
-    <div><label>出生地（真太阳时校正）</label><select id="ct"></select></div>
+    <div><label>出生时间（当地钟表时间）</label><input type="time" id="tm" value="14:30"></div>
   </div>
+  <div class="hint">按出生地钟表时间排盘（不作真太阳时换算）。年柱以立春换年、月柱以节气换月、23:00 之后归次日子时，均由历法库处理。</div>
   <div style="margin-top:14px"><label>想了解哪些方面（可多选）</label>
     <div class="chips" id="dm">
       <span data-k="marriage" class="on">婚姻感情</span><span data-k="wealth" class="on">财运</span>
@@ -106,7 +107,6 @@ var WC={"木":"w1","火":"w2","土":"w3","金":"w4","水":"w5"};
 var ORG={"木":"肝胆、筋络、情绪郁结","火":"心脉、血压、睡眠与眼目","土":"脾胃、消化、肌肉","金":"肺与呼吸、皮肤、大肠","水":"肾与泌尿、腰膝、内分泌"};
 var TIP={"木":"早睡舒肝、多走绿地、少动怒","火":"静心安神、控咖啡与宵夜","土":"三餐定时、忌生冷过饱","金":"护呼吸、少烟尘、常做深呼吸","水":"节欲护腰、足量饮水、忌久坐"};
 var IND={"木":"文教、木作、植物、设计","火":"能源、电子、餐饮、传媒","土":"地产、建筑、农牧、仓储","金":"金融、机械、五金、医器","水":"物流、贸易、水务、信息"};
-var CITY=[["北京",116.4],["上海",121.5],["广州",113.3],["深圳",114.1],["杭州",120.2],["南京",118.8],["成都",104.1],["重庆",106.6],["武汉",114.3],["西安",108.9],["沈阳",123.4],["哈尔滨",126.6],["济南",117.0],["郑州",113.6],["长沙",112.9],["福州",119.3],["合肥",117.2],["昆明",102.7],["乌鲁木齐",87.6],["兰州",103.8],["台北",121.5],["香港",114.2],["不校正（用钟表时间）",null]];
 var DN={marriage:"婚 姻 感 情",wealth:"财 运",child:"子 女",career:"事 业 工 作",health:"健 康"};
 function $(i){return document.getElementById(i);}
 
@@ -117,15 +117,10 @@ function ss(d,t){var a=E[d],b=E[t],sm=(YANG.indexOf(d)>=0)===(YANG.indexOf(t)>=0
  if(KE[b]===a){return sm?"七杀":"正官";}
  return sm?"偏印":"正印";}
 function gzOf(y){return GANS.charAt(((y-4)%10+10)%10)+ZHIS.charAt(((y-4)%12+12)%12);}
-function tst(dt,lng){var n=Math.floor((dt-new Date(dt.getFullYear(),0,0))/864e5);
- var B=2*Math.PI/365*(n-81),eot=9.87*Math.sin(2*B)-7.53*Math.cos(B)-1.5*Math.sin(B);
- return new Date(dt.getTime()+((lng-120)*4+eot)*6e4);}
 function L(t,s){return '<p><span class="tag">'+t+"</span>"+s+"</p>";}
 
 (function(){
- var c=$("ct"),i,o;
- for(i=0;i<CITY.length;i++){o=document.createElement("option");o.value=CITY[i][1]===null?"":CITY[i][1];o.textContent=CITY[i][0];c.appendChild(o);}
- c.selectedIndex=1;
+ var i,o;
  var MN=["正","二","三","四","五","六","七","八","九","十","冬","腊"];
  for(i=1;i<=12;i++){o=document.createElement("option");o.value=i;o.textContent=MN[i-1]+"月";$("lm").appendChild(o);}
  $("lm").value=4;
@@ -238,16 +233,12 @@ function run(){
   var sex=parseInt($("sx").querySelector(".on").getAttribute("data-v"),10);
   var lf=$("lf").querySelector(".on").getAttribute("data-v");
   var tp=($("tm").value||"12:00").split(":"),hh=parseInt(tp[0],10),mi=parseInt(tp[1],10);
-  var s0,i,j;
+  var solar,i,j;
   if(lf==="s"){ if(!$("sd").value){$("msg").textContent="请选择出生日期。";return;}
-   var d=$("sd").value.split("-"); s0=Solar.fromYmdHms(+d[0],+d[1],+d[2],hh,mi,0);
+   var d=$("sd").value.split("-"); solar=Solar.fromYmdHms(+d[0],+d[1],+d[2],hh,mi,0);
   }else{ var y=parseInt($("ly").value,10),m=parseInt($("lm").value,10),dd=parseInt($("ld").value,10);
    if(!y){$("msg").textContent="请填写农历年份。";return;}
-   if($("lp").checked){m=-m;} s0=Lunar.fromYmdHms(y,m,dd,hh,mi,0).getSolar();}
-  var lv=$("ct").value,note="未作真太阳时校正",solar=s0;
-  if(lv!==""){ var dt=tst(new Date(s0.getYear(),s0.getMonth()-1,s0.getDay(),s0.getHour(),s0.getMinute(),0),parseFloat(lv));
-   solar=Solar.fromYmdHms(dt.getFullYear(),dt.getMonth()+1,dt.getDate(),dt.getHours(),dt.getMinutes(),0);
-   note="真太阳时 "+("0"+dt.getHours()).slice(-2)+":"+("0"+dt.getMinutes()).slice(-2)+"（已校正经度与均时差）";}
+   if($("lp").checked){m=-m;} solar=Lunar.fromYmdHms(y,m,dd,hh,mi,0).getSolar();}
   var lunar=solar.getLunar(),ec=lunar.getEightChar(),c=build(ec,lunar,solar,sex);
   var ds=$("dm").getElementsByClassName("on"),doms=[];
   for(i=0;i<ds.length;i++){doms.push(ds[i].getAttribute("data-k"));}
@@ -259,7 +250,7 @@ function run(){
   function row(t,fn){var s='<tr><th class="rh">'+t+"</th>";
    for(var k=0;k<4;k++){s+="<td>"+fn(c.P[k])+"</td>";} return s+"</tr>";}
   var th="";for(i=0;i<4;i++){th+="<th>"+NM[i]+'<br><span style="font-weight:400;color:#9c9087;font-size:10px">'+GL[i]+"</span></th>";}
-  var html='<div class="card"><div class="h">命 盘</div><div class="meta">阳历 <b>'+c.solar+"</b>　农历 <b>"+c.lunar+"</b><br><i>"+(sex===1?"男命":"女命")+"</i>　生肖 <b>"+c.sxiao+"</b>　节气 <b>"+c.jq+"</b>　日主 <b>"+c.dg+"（"+c.de+"）</b>　身<b>"+c.state+'</b>　<span style="font-size:11px">'+note+"</span></div>"+
+  var html='<div class="card"><div class="h">命 盘</div><div class="meta">阳历 <b>'+c.solar+"</b>　农历 <b>"+c.lunar+"</b><br><i>"+(sex===1?"男命":"女命")+"</i>　生肖 <b>"+c.sxiao+"</b>　节气 <b>"+c.jq+"</b>　日主 <b>"+c.dg+"（"+c.de+"）</b>　身<b>"+c.state+'</b>　<span style="font-size:11px">按出生地钟表时间排盘</span></div>'+
   '<table style="margin-top:12px"><tr><th class="rh"></th>'+th+"</tr>"+
   row("干支",function(p){return '<span class="gz">'+p.gz.charAt(0)+"<br>"+p.gz.charAt(1)+"</span>";})+
   row("十神",function(p){return p.sh;})+
