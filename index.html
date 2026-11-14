@@ -9,7 +9,7 @@
 :root{--bg:#15110e;--card:#201b17;--c2:#2a231d;--line:#3d342b;--gold:#d9b36a;--txt:#f0e8dd;--dim:#9c9087;--up:#6fb36f;--dn:#cf7363}
 html,body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
 body{padding:16px 14px 36px}
-.wrap{max-width:960px;margin:0 auto}
+.wrap{max-width:980px;margin:0 auto}
 h1{font:700 21px/1.3 serif;color:var(--gold);letter-spacing:4px;margin:0 0 4px;text-align:center}
 .sub{text-align:center;color:var(--dim);font-size:12px;margin-bottom:16px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px}
@@ -18,7 +18,7 @@ h1{font:700 21px/1.3 serif;color:var(--gold);letter-spacing:4px;margin:0 0 4px;t
 label{display:block;font-size:11px;color:var(--dim);margin-bottom:5px;letter-spacing:1px}
 input,select{width:100%;background:#120f0c;color:var(--txt);border:1px solid var(--line);border-radius:7px;padding:9px;font-size:15px;font-family:inherit}
 .seg{display:flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}
-.seg button{flex:1;background:#120f0c;color:var(--dim);border:0;padding:9px 0;font-size:14px;font-family:inherit;cursor:pointer}
+.seg button{flex:1;background:#120f0c;color:var(--dim);border:0;padding:9px 2px;font-size:13px;font-family:inherit;cursor:pointer}
 .seg button.on{background:var(--gold);color:#241c11;font-weight:700}
 .hint{font-size:11px;color:#6f6660;margin-top:6px;line-height:1.6}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
@@ -29,8 +29,10 @@ input,select{width:100%;background:#120f0c;color:var(--txt);border:1px solid var
 table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
 th,td{border:1px solid var(--line);padding:7px 2px;text-align:center;word-break:break-all}
 th{color:var(--gold);font-weight:600;background:var(--c2);font-size:12px}
-th.rh{width:52px}
-.gz{display:block;font:700 25px/1.25 serif}
+th.rh{width:50px}
+td.hl{background:#2b241c}
+.gz{display:block;font:700 24px/1.25 serif}
+.gz.s{font-size:20px}
 .meta{font-size:13px;color:var(--dim)}
 .meta b{color:var(--txt);font-weight:600}
 .meta i{font-style:normal;color:var(--gold)}
@@ -52,6 +54,10 @@ th.rh{width:52px}
 .ln span{border:1px solid var(--line);border-radius:6px;padding:4px 8px;color:var(--dim)}
 .ln span b{color:var(--txt);font-weight:600}
 .ln span.hi{border-color:var(--gold);color:var(--txt)}
+.d7{flex:0 0 auto;width:62px;border:1px solid var(--line);border-radius:8px;padding:6px 3px;text-align:center;font-size:10px;color:var(--dim);cursor:pointer}
+.d7.on{border-color:var(--gold);background:var(--c2);color:var(--txt)}
+.d7 b{display:block;font:700 14px/1.4 serif;color:var(--txt)}
+.d7 .v{display:block;font:700 13px/1.5 inherit;margin-top:2px}
 .yr{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px}
 .yb{background:var(--c2);border:1px solid var(--line);border-radius:10px;padding:12px}
 .yb.now{border-color:var(--gold)}
@@ -69,13 +75,13 @@ th.rh{width:52px}
 .tag.z{border-color:#7d8fa8;color:#9fb3c9}.tag.m{border-color:#a8887d;color:#c9a99f}
 .pr{font-size:11px;color:#6f6660;margin:2px 0 7px}
 .foot{font-size:11px;color:#6f6660;text-align:center;line-height:1.8}
-@media(max-width:600px){body{padding:12px 10px 28px}.gz{font-size:21px}.yr{grid-template-columns:1fr}th,td{padding:6px 1px;font-size:12px}th.rh{width:44px}.bars{grid-template-columns:24px 1fr 82px}}
+@media(max-width:600px){body{padding:12px 10px 28px}.gz{font-size:20px}.gz.s{font-size:17px}.yr{grid-template-columns:1fr}th,td{padding:6px 1px;font-size:11px}th.rh{width:42px}.bars{grid-template-columns:24px 1fr 82px}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <h1>四 柱 八 字</h1>
-<div class="sub">旺衰为主（0.6）· 盲派为辅（0.4）· 合冲刑会后能量重算 · 流年月令并参</div>
+<div class="sub">旺衰为主（0.6）· 盲派为辅（0.4）· 合冲刑会能量重算 · 流年流月流日七柱</div>
 
 <div class="card">
   <div class="h">命 主 信 息</div>
@@ -90,6 +96,11 @@ th.rh{width:52px}
     <div><label>出生时间（当地钟表时间）</label><input type="time" id="tm" value="14:30"></div>
   </div>
   <div class="hint">按钟表时间排盘，不作真太阳时换算。立春换年、节气换月、23:00 归次日子时由历法库处理。</div>
+  <div style="margin-top:14px" class="grid">
+    <div><label>查 看 方 式</label><div class="seg" id="md">
+      <button data-v="y" class="on">年运：去年·今年·明年</button><button data-v="d">指定日期：流年流月流日</button></div></div>
+    <div id="wT" style="display:none"><label>要看的日期</label><input type="date" id="td"></div>
+  </div>
   <div style="margin-top:14px"><label>想了解哪些方面（可多选）</label>
     <div class="chips" id="dm">
       <span data-k="marriage" class="on">婚姻感情</span><span data-k="wealth" class="on">财运</span>
@@ -106,13 +117,15 @@ th.rh{width:52px}
 
 <script src="https://cdn.jsdelivr.net/npm/lunar-javascript/lunar.js"></script>
 <script>
-/* ========== 可调参数 ========== */
-var W_ZP=0.6, W_MP=0.4;            /* 子平 / 盲派 权重 */
-var MON_YEAR_W=0.4;                /* 流年月令占比，命局月令占 1-此值 */
-var K_SANHUI=0.60, K_SANHE=0.50, K_BANHE=0.25, K_LIUHE_HUA=0.15;
-var F_CHONG_HI=0.85, F_CHONG_LO=0.65, F_XING3=0.80, F_XING2=0.88, F_HAI=0.92, F_LIUHE=0.88, F_GANHE=0.90;
+/* ===== 可调参数 ===== */
+var W_ZP=0.6,W_MP=0.4;
+var MON_YEAR_W=0.4;        /* 年视角：流年支占比，命局月支占 1-此值 */
+var MON_DAY_W=0.7;         /* 日视角：流日所在流月令占比 0.7，命局月支 0.3 */
+var K_SANHUI=0.60,K_SANHE=0.50,K_BANHE=0.25,K_LIUHE_HUA=0.15;
+var F_CHONG_HI=0.85,F_CHONG_LO=0.65,F_XING3=0.80,F_XING2=0.88,F_HAI=0.92,F_LIUHE=0.88,F_GANHE=0.90;
+var LAYW={"流年":0.5,"流月":0.7,"流日":1.0};   /* 应期权重：日最切身 */
 
-/* ========== 常量 ========== */
+/* ===== 常量 ===== */
 var GANS="甲乙丙丁戊己庚辛壬癸",ZHIS="子丑寅卯辰巳午未申酉戌亥";
 var E={"甲":"木","乙":"木","丙":"火","丁":"火","戊":"土","己":"土","庚":"金","辛":"金","壬":"水","癸":"水"};
 var ZE={"子":"水","丑":"土","寅":"木","卯":"木","辰":"土","巳":"火","午":"火","未":"土","申":"金","酉":"金","戌":"土","亥":"水"};
@@ -121,10 +134,8 @@ var HIDE={"子":[["癸",1]],"丑":[["己",1],["癸",0.40],["辛",0.20]],"寅":[[
 "未":[["己",1],["丁",0.40],["乙",0.20]],"申":[["庚",1],["壬",0.30],["戊",0.20]],"酉":[["辛",1]],
 "戌":[["戊",1],["辛",0.40],["丁",0.20]],"亥":[["壬",1],["甲",0.30]]};
 var YANG="甲丙戊庚壬";
-var SHENG={"木":"火","火":"土","土":"金","金":"水","水":"木"};
-var KEE={"木":"土","土":"水","水":"火","火":"金","金":"木"};
-var SHENGBY={"火":"木","土":"火","金":"土","水":"金","木":"水"};
-var KEBY={"土":"木","水":"土","火":"水","金":"火","木":"金"};
+var SHENG={"木":"火","火":"土","土":"金","金":"水","水":"木"},KEE={"木":"土","土":"水","水":"火","火":"金","金":"木"};
+var SHENGBY={"火":"木","土":"火","金":"土","水":"金","木":"水"},KEBY={"土":"木","水":"土","火":"水","金":"火","木":"金"};
 var CH={"子":"午","午":"子","丑":"未","未":"丑","寅":"申","申":"寅","卯":"酉","酉":"卯","辰":"戌","戌":"辰","巳":"亥","亥":"巳"};
 var H6={"子":"丑","丑":"子","寅":"亥","亥":"寅","卯":"戌","戌":"卯","辰":"酉","酉":"辰","巳":"申","申":"巳","午":"未","未":"午"};
 var H6HUA={"子丑":"土","寅亥":"木","卯戌":"火","辰酉":"金","巳申":"水","午未":"土"};
@@ -132,11 +143,9 @@ var HAI={"子":"未","未":"子","丑":"午","午":"丑","寅":"巳","巳":"寅"
 var SANHE=[["申","子","辰","水"],["亥","卯","未","木"],["寅","午","戌","火"],["巳","酉","丑","金"]];
 var SANHUI=[["寅","卯","辰","木"],["巳","午","未","火"],["申","酉","戌","金"],["亥","子","丑","水"]];
 var BANHE=[["申","子","水"],["子","辰","水"],["亥","卯","木"],["卯","未","木"],["寅","午","火"],["午","戌","火"],["巳","酉","金"],["酉","丑","金"]];
-var SANXING=[["寅","巳","申"],["丑","戌","未"]];
-var ZIXING=["辰","午","酉","亥"];
+var SANXING=[["寅","巳","申"],["丑","戌","未"]],ZIXING=["辰","午","酉","亥"];
 var GANHE={"甲":"己","己":"甲","乙":"庚","庚":"乙","丙":"辛","辛":"丙","丁":"壬","壬":"丁","戊":"癸","癸":"戊"};
 var GANHUA={"甲己":"土","乙庚":"金","丙辛":"水","丁壬":"木","戊癸":"火"};
-/* 月令旺度：旺1.40 相1.20 休1.00 囚0.75 死0.80（土月以土为旺，带上季余气） */
 var MON={
 "寅":{"木":1.40,"火":1.20,"水":1.00,"土":0.80,"金":0.75},"卯":{"木":1.40,"火":1.20,"水":1.00,"土":0.80,"金":0.75},
 "辰":{"土":1.35,"木":1.15,"火":1.05,"金":0.95,"水":0.90},
@@ -147,142 +156,115 @@ var MON={
 "亥":{"水":1.40,"木":1.20,"金":1.00,"土":0.80,"火":0.75},"子":{"水":1.40,"木":1.20,"金":1.00,"土":0.80,"火":0.75},
 "丑":{"土":1.35,"水":1.15,"木":1.05,"金":0.95,"火":0.80}};
 var POSW=[{g:0.8,z:1.0},{g:1.0,z:1.6},{g:1.0,z:1.2},{g:0.8,z:1.0}];
-var EXW={"大运":{g:0.9,z:1.1},"流年":{g:1.0,z:1.2}};
-var WC={"木":"w1","火":"w2","土":"w3","金":"w4","水":"w5"};
-var EL5=["木","火","土","金","水"];
-var SK=["比劫","食伤","财","官杀","印"];
+var EXW={"大运":{g:0.9,z:1.1},"流年":{g:1.0,z:1.2},"流月":{g:0.9,z:1.3},"流日":{g:1.0,z:1.1}};
+var WC={"木":"w1","火":"w2","土":"w3","金":"w4","水":"w5"},EL5=["木","火","土","金","水"],SK=["比劫","食伤","财","官杀","印"];
+var S2C={"比肩":"比劫","劫财":"比劫","食神":"食伤","伤官":"食伤","正财":"财","偏财":"财","正官":"官杀","七杀":"官杀","正印":"印","偏印":"印"};
 var ORG={"木":"肝胆、筋络、情绪郁结","火":"心脉、血压、睡眠与眼目","土":"脾胃、消化、肌肉","金":"肺与呼吸、皮肤、大肠","水":"肾与泌尿、腰膝、内分泌"};
 var TIP={"木":"早睡舒肝、多走绿地、少动怒","火":"静心安神、控咖啡与宵夜","土":"三餐定时、忌生冷过饱","金":"护呼吸、少烟尘、常做深呼吸","水":"节欲护腰、足量饮水、忌久坐"};
 var IND={"木":"文教、木作、植物、设计","火":"能源、电子、餐饮、传媒","土":"地产、建筑、农牧、仓储","金":"金融、机械、五金、医器","水":"物流、贸易、水务、信息"};
 var DNM={marriage:"婚 姻 感 情",wealth:"财 运",child:"子 女",career:"事 业 工 作",health:"健 康"};
 function $(i){return document.getElementById(i);}
 function ss(d,t){var a=E[d],b=E[t],sm=(YANG.indexOf(d)>=0)===(YANG.indexOf(t)>=0);
- if(a===b){return sm?"比肩":"劫财";} if(SHENG[a]===b){return sm?"食神":"伤官";}
- if(KEE[a]===b){return sm?"偏财":"正财";} if(KEE[b]===a){return sm?"七杀":"正官";} return sm?"偏印":"正印";}
-function gzOf(y){return GANS.charAt(((y-4)%10+10)%10)+ZHIS.charAt(((y-4)%12+12)%12);}
+ if(a===b){return sm?"比肩":"劫财";}if(SHENG[a]===b){return sm?"食神":"伤官";}
+ if(KEE[a]===b){return sm?"偏财":"正财";}if(KEE[b]===a){return sm?"七杀":"正官";}return sm?"偏印":"正印";}
 function Z(s){return '<p><span class="tag z">子平</span>'+s+"</p>";}
 function M(s){return '<p><span class="tag m">盲派</span>'+s+"</p>";}
+function pad(n){return (n<10?"0":"")+n;}
 
-/* ========== 表单 ========== */
+/* ===== 表单 ===== */
 (function(){var i,o,MN=["正","二","三","四","五","六","七","八","九","十","冬","腊"];
- for(i=1;i<=12;i++){o=document.createElement("option");o.value=i;o.textContent=MN[i-1]+"月";$("lm").appendChild(o);} $("lm").value=4;
+ for(i=1;i<=12;i++){o=document.createElement("option");o.value=i;o.textContent=MN[i-1]+"月";$("lm").appendChild(o);}$("lm").value=4;
  var DD=["初一","初二","初三","初四","初五","初六","初七","初八","初九","初十","十一","十二","十三","十四","十五","十六","十七","十八","十九","二十","廿一","廿二","廿三","廿四","廿五","廿六","廿七","廿八","廿九","三十"];
- for(i=1;i<=30;i++){o=document.createElement("option");o.value=i;o.textContent=DD[i-1];$("ld").appendChild(o);} $("ld").value=26;
+ for(i=1;i<=30;i++){o=document.createElement("option");o.value=i;o.textContent=DD[i-1];$("ld").appendChild(o);}$("ld").value=26;
+ var n=new Date();$("td").value=n.getFullYear()+"-"+pad(n.getMonth()+1)+"-"+pad(n.getDate());
  function seg(id,cb){$(id).addEventListener("click",function(e){var b=e.target;if(b.tagName!=="BUTTON"){return;}
   var ch=this.getElementsByTagName("button"),k;for(k=0;k<ch.length;k++){ch[k].className="";}
   b.className="on";if(cb){cb(b.getAttribute("data-v"));}});}
  seg("sx");seg("lf",function(v){$("wS").style.display=v==="s"?"":"none";$("wL").style.display=v==="l"?"":"none";});
+ seg("md",function(v){$("wT").style.display=v==="d"?"":"none";});
  $("dm").addEventListener("click",function(e){var s=e.target;if(s.tagName!=="SPAN"){return;}s.className=s.className==="on"?"":"on";});
 })();
 
-/* ========== 地支关系与能量重算 ========== */
+/* ===== 地支关系 ===== */
 function relate(list,p){
  var n=list.length,fac=[],ev=[],hua={"木":0,"火":0,"土":0,"金":0,"水":0},i,j,k,done={};
  for(i=0;i<n;i++){fac.push(1);}
  function find(z,u){for(var t=0;t<n;t++){if(list[t].z===z&&u.indexOf(t)<0){return t;}}return -1;}
  function lb(t){return list[t].label+list[t].z;}
- /* 三会 */
  for(i=0;i<SANHUI.length;i++){var c=SANHUI[i],u=[],ok=true;
   for(j=0;j<3;j++){var t=find(c[j],u);if(t<0){ok=false;break;}u.push(t);}
-  if(ok){var s=0;for(j=0;j<3;j++){s+=p[u[j]];}
-   hua[c[3]]+=s*K_SANHUI;done[c[3]]=1;
+  if(ok){var s=0;for(j=0;j<3;j++){s+=p[u[j]];}hua[c[3]]+=s*K_SANHUI;done[c[3]]=1;
    ev.push({c:"e1",s:"<b>三会"+c[0]+c[1]+c[2]+"</b>（"+lb(u[0])+"·"+lb(u[1])+"·"+lb(u[2])+"）会成"+c[3]+"方，"+c[3]+"气大增 +"+(s*K_SANHUI).toFixed(1)});}}
- /* 三合 */
  for(i=0;i<SANHE.length;i++){var c2=SANHE[i];if(done[c2[3]]){continue;}
-  var u2=[],ok2=true;
-  for(j=0;j<3;j++){var t2=find(c2[j],u2);if(t2<0){ok2=false;break;}u2.push(t2);}
-  if(ok2){var s2=0;for(j=0;j<3;j++){s2+=p[u2[j]];}
-   hua[c2[3]]+=s2*K_SANHE;done[c2[3]]=1;
+  var u2=[],ok2=true;for(j=0;j<3;j++){var t2=find(c2[j],u2);if(t2<0){ok2=false;break;}u2.push(t2);}
+  if(ok2){var s2=0;for(j=0;j<3;j++){s2+=p[u2[j]];}hua[c2[3]]+=s2*K_SANHE;done[c2[3]]=1;
    ev.push({c:"e1",s:"<b>三合"+c2[0]+c2[1]+c2[2]+"</b>（"+lb(u2[0])+"·"+lb(u2[1])+"·"+lb(u2[2])+"）合化"+c2[3]+"局，"+c2[3]+"气增 +"+(s2*K_SANHE).toFixed(1)});}}
- /* 半合 */
  for(i=0;i<BANHE.length;i++){var b=BANHE[i];if(done[b[2]]){continue;}
-  var ua=[],ta=find(b[0],ua);if(ta<0){continue;}ua.push(ta);
-  var tb=find(b[1],ua);if(tb<0){continue;}
+  var ua=[],ta=find(b[0],ua);if(ta<0){continue;}ua.push(ta);var tb=find(b[1],ua);if(tb<0){continue;}
   var sb=p[ta]+p[tb];hua[b[2]]+=sb*K_BANHE;
   ev.push({c:"e1",s:"<b>半合"+b[0]+b[1]+"</b>（"+lb(ta)+"·"+lb(tb)+"）→"+b[2]+"，"+b[2]+"气增 +"+(sb*K_BANHE).toFixed(1)});}
- /* 六冲 */
- for(i=0;i<n;i++){for(j=i+1;j<n;j++){ if(CH[list[i].z]!==list[j].z){continue;}
-  var hi=p[i]>=p[j]?i:j,lo=hi===i?j:i;
-  fac[hi]*=F_CHONG_HI;fac[lo]*=F_CHONG_LO;
-  ev.push({c:"e2",s:"<b>"+lb(i)+"冲"+lb(j)+"</b>　两败而不均："+lb(lo)+"力弱受损重（×"+F_CHONG_LO+"），"+lb(hi)+"力强损轻（×"+F_CHONG_HI+"）"});}}
- /* 三刑 */
+ for(i=0;i<n;i++){for(j=i+1;j<n;j++){if(CH[list[i].z]!==list[j].z){continue;}
+  var hi=p[i]>=p[j]?i:j,lo=hi===i?j:i;fac[hi]*=F_CHONG_HI;fac[lo]*=F_CHONG_LO;
+  ev.push({c:"e2",s:"<b>"+lb(i)+"冲"+lb(j)+"</b>　"+lb(lo)+"力弱受损重（×"+F_CHONG_LO+"），"+lb(hi)+"力强损轻（×"+F_CHONG_HI+"）"});}}
  for(i=0;i<SANXING.length;i++){var x=SANXING[i],ux=[],okx=true;
   for(j=0;j<3;j++){var tx=find(x[j],ux);if(tx<0){okx=false;break;}ux.push(tx);}
   if(okx){for(j=0;j<3;j++){fac[ux[j]]*=F_XING3;}
    ev.push({c:"e2",s:"<b>三刑"+x[0]+x[1]+x[2]+"</b>（"+lb(ux[0])+"·"+lb(ux[1])+"·"+lb(ux[2])+"）三方俱耗，各 ×"+F_XING3});}}
- /* 子卯刑 */
- for(i=0;i<n;i++){for(j=i+1;j<n;j++){
-  var a1=list[i].z,b1=list[j].z;
+ for(i=0;i<n;i++){for(j=i+1;j<n;j++){var a1=list[i].z,b1=list[j].z;
   if((a1==="子"&&b1==="卯")||(a1==="卯"&&b1==="子")){fac[i]*=F_XING2;fac[j]*=F_XING2;
-   ev.push({c:"e2",s:"<b>"+lb(i)+"刑"+lb(j)+"</b>（子卯相刑）双方各 ×"+F_XING2});}}}
- /* 自刑 */
+   ev.push({c:"e2",s:"<b>"+lb(i)+"刑"+lb(j)+"</b>（子卯相刑）各 ×"+F_XING2});}}}
  for(k=0;k<ZIXING.length;k++){var cnt=[],zz=ZIXING[k];
   for(i=0;i<n;i++){if(list[i].z===zz){cnt.push(i);}}
   if(cnt.length>=2){for(i=0;i<cnt.length;i++){fac[cnt[i]]*=F_XING2;}
    ev.push({c:"e2",s:"<b>"+zz+zz+"自刑</b>（"+lb(cnt[0])+"·"+lb(cnt[1])+"）内耗，各 ×"+F_XING2});}}
- /* 六害 */
- for(i=0;i<n;i++){for(j=i+1;j<n;j++){ if(HAI[list[i].z]!==list[j].z){continue;}
-  fac[i]*=F_HAI;fac[j]*=F_HAI;
-  ev.push({c:"e3",s:"<b>"+lb(i)+"害"+lb(j)+"</b>　暗损，各 ×"+F_HAI});}}
- /* 六合 */
- for(i=0;i<n;i++){for(j=i+1;j<n;j++){ if(H6[list[i].z]!==list[j].z){continue;}
+ for(i=0;i<n;i++){for(j=i+1;j<n;j++){if(HAI[list[i].z]!==list[j].z){continue;}
+  fac[i]*=F_HAI;fac[j]*=F_HAI;ev.push({c:"e3",s:"<b>"+lb(i)+"害"+lb(j)+"</b>　暗损，各 ×"+F_HAI});}}
+ for(i=0;i<n;i++){for(j=i+1;j<n;j++){if(H6[list[i].z]!==list[j].z){continue;}
   fac[i]*=F_LIUHE;fac[j]*=F_LIUHE;
-  var key=H6HUA[list[i].z+list[j].z]?list[i].z+list[j].z:list[j].z+list[i].z;
-  var hv=H6HUA[key];if(hv){hua[hv]+=(p[i]+p[j])*K_LIUHE_HUA;}
-  ev.push({c:"e3",s:"<b>"+lb(i)+"合"+lb(j)+"</b>　两支羁绊各 ×"+F_LIUHE+(hv?("，化气助"+hv+" +"+((p[i]+p[j])*K_LIUHE_HUA).toFixed(1)):"")});}}
+  var key=H6HUA[list[i].z+list[j].z]?list[i].z+list[j].z:list[j].z+list[i].z,hv=H6HUA[key];
+  if(hv){hua[hv]+=(p[i]+p[j])*K_LIUHE_HUA;}
+  ev.push({c:"e3",s:"<b>"+lb(i)+"合"+lb(j)+"</b>　各 ×"+F_LIUHE+(hv?("，化气助"+hv+" +"+((p[i]+p[j])*K_LIUHE_HUA).toFixed(1)):"")});}}
  return {fac:fac,ev:ev,hua:hua};
 }
 
-/* ========== 能量引擎 ========== */
-function calc(P,extra,monBase,monYear){
+/* ===== 能量引擎 ===== */
+function monCoef(srcs){var mm={},i,k;
+ for(k=0;k<5;k++){var el=EL5[k],s=0;
+  for(i=0;i<srcs.length;i++){s+=srcs[i].w*MON[srcs[i].z][el];}mm[el]=s;}
+ return mm;}
+function calc(P,extra,mmSrcs){
  var items=[],i,j;
  for(i=0;i<4;i++){items.push({g:P[i].gan,z:P[i].zhi,gw:POSW[i].g,zw:POSW[i].z,label:["年","月","日","时"][i],self:i===2});}
  for(i=0;i<extra.length;i++){var ex=extra[i];
   items.push({g:ex.g,z:ex.z,gw:EXW[ex.label].g,zw:EXW[ex.label].z,label:ex.label,self:false});}
- /* 月令系数 */
- var mm={},i2;
- for(i2=0;i2<5;i2++){var el=EL5[i2];
-  var a=MON[monBase][el];
-  mm[el]=monYear?((1-MON_YEAR_W)*a+MON_YEAR_W*MON[monYear][el]):a;}
- /* 支基础力 */
- var zl=[],p=[];
+ var mm=monCoef(mmSrcs),zl=[],p=[];
  for(i=0;i<items.length;i++){zl.push({z:items[i].z,label:items[i].label});p.push(items[i].zw*mm[ZE[items[i].z]]);}
- var R=relate(zl,p);
- /* 天干合 */
- var gf=[],gev=[];
+ var R=relate(zl,p),gf=[],gev=[];
  for(i=0;i<items.length;i++){gf.push(1);}
  for(i=0;i<items.length;i++){for(j=i+1;j<items.length;j++){
-  if(GANHE[items[i].g]!==items[j].g){continue;}
-  gf[i]*=F_GANHE;gf[j]*=F_GANHE;
+  if(GANHE[items[i].g]!==items[j].g){continue;}gf[i]*=F_GANHE;gf[j]*=F_GANHE;
   var kk=GANHUA[items[i].g+items[j].g]?items[i].g+items[j].g:items[j].g+items[i].g;
-  gev.push({c:"e3",s:"<b>"+items[i].label+"干"+items[i].g+"合"+items[j].label+"干"+items[j].g+"</b>　天干相合各 ×"+F_GANHE+(GANHUA[kk]?("，有化"+GANHUA[kk]+"之意"):"")});}}
- /* 汇总五行 */
- function sum(useRel){
-  var wx={"木":0,"火":0,"土":0,"金":0,"水":0},a,b,h,selfV=0;
-  for(a=0;a<items.length;a++){
-   var it=items[a],gw=it.gw*(useRel?gf[a]:1);
-   if(gw>0){var v=gw*mm[E[it.g]];wx[E[it.g]]+=v;if(it.self){selfV=v;}}
-   var zp=p[a]*(useRel?R.fac[a]:1),hd=HIDE[it.z];
+  gev.push({c:"e3",s:"<b>"+items[i].label+"干"+items[i].g+"合"+items[j].label+"干"+items[j].g+"</b>　各 ×"+F_GANHE+(GANHUA[kk]?("，有化"+GANHUA[kk]+"之意"):"")});}}
+ function sum(u){var wx={"木":0,"火":0,"土":0,"金":0,"水":0},a,b,h,sv=0;
+  for(a=0;a<items.length;a++){var it=items[a],gw=it.gw*(u?gf[a]:1);
+   if(gw>0){var v=gw*mm[E[it.g]];wx[E[it.g]]+=v;if(it.self){sv=v;}}
+   var zp=p[a]*(u?R.fac[a]:1),hd=HIDE[it.z];
    for(b=0;b<hd.length;b++){wx[E[hd[b][0]]]+=zp*hd[b][1]*mm[E[hd[b][0]]]/mm[ZE[it.z]];}}
-  if(useRel){for(h in R.hua){if(R.hua[h]){wx[h]+=R.hua[h]*mm[h];}}}
-  return {wx:wx,selfV:selfV};
- }
- var raw=sum(false),adj=sum(true),wx=adj.wx,de=E[P[2].gan];
- var sc={};
- sc["比劫"]=wx[de]-adj.selfV; sc["食伤"]=wx[SHENG[de]]; sc["财"]=wx[KEE[de]];
- sc["官杀"]=wx[KEBY[de]]; sc["印"]=wx[SHENGBY[de]];
- var help=wx[de]+wx[SHENGBY[de]], drain=sc["食伤"]+sc["财"]+sc["官杀"];
- var ratio=help/((help+drain)||1);
- var state=ratio>0.56?"偏旺":(ratio<0.42?"偏弱":"中和");
+  if(u){for(h in R.hua){if(R.hua[h]){wx[h]+=R.hua[h]*mm[h];}}}
+  return {wx:wx,sv:sv};}
+ var raw=sum(false),adj=sum(true),wx=adj.wx,de=E[P[2].gan],sc={};
+ sc["比劫"]=wx[de]-adj.sv;sc["食伤"]=wx[SHENG[de]];sc["财"]=wx[KEE[de]];
+ sc["官杀"]=wx[KEBY[de]];sc["印"]=wx[SHENGBY[de]];
+ var help=wx[de]+wx[SHENGBY[de]],drain=sc["食伤"]+sc["财"]+sc["官杀"];
+ var ratio=help/((help+drain)||1),state=ratio>0.56?"偏旺":(ratio<0.42?"偏弱":"中和");
  var tot=0,i3;for(i3=0;i3<5;i3++){tot+=sc[SK[i3]];}
  var lv={};for(i3=0;i3<5;i3++){var r=sc[SK[i3]]/((tot/5)||1);lv[SK[i3]]=r>=1.15?"旺":(r<=0.75?"衰":"中");}
  var ord=EL5.slice().sort(function(a,b){return wx[b]-wx[a];});
- return {wxRaw:raw.wx,wx:wx,sc:sc,lv:lv,state:state,ratio:ratio,ord:ord,mm:mm,
-  ev:R.ev.concat(gev),de:de,dg:P[2].gan,
-  fav:state==="偏弱"?["比劫","印"]:(state==="偏旺"?["食伤","财","官杀"]:["财","官杀","食伤"])};
+ return {wxRaw:raw.wx,wx:wx,sc:sc,lv:lv,state:state,ratio:ratio,ord:ord,mm:mm,ev:R.ev.concat(gev),
+  de:de,dg:P[2].gan,fav:state==="偏弱"?["比劫","印"]:(state==="偏旺"?["食伤","财","官杀"]:["财","官杀","食伤"])};
 }
 
-/* ========== 盲派旺衰配对门限 ========== */
+/* ===== 盲派门限 ===== */
 function gate(a,b){
  if(a==="衰"&&b==="衰"){return {use:false,k:0,t:"衰衰·双方俱无力，不以为论"};}
  if(a==="旺"&&b==="旺"){return {use:true,k:0.5,t:"旺旺·势均力敌，相持为平手"};}
@@ -292,210 +274,201 @@ function gate(a,b){
  if(a==="中"&&b==="旺"){return {use:true,k:0.9,t:"中旺·受方更强，须防反制"};}
  if(a==="中"&&b==="中"){return {use:true,k:0.6,t:"中中·力量相近，作用中等"};}
  if(a==="中"&&b==="衰"){return {use:true,k:0.7,t:"中衰·主方稍胜，作用中等"};}
- return {use:true,k:0.5,t:"衰中·力薄，作用有限"};
-}
-var PAIRS=[
- {id:"st_gs",a:"食伤",b:"官杀",nm:"伤官见官"},
- {id:"bj_c", a:"比劫",b:"财",  nm:"比劫夺财"},
- {id:"c_y",  a:"财",  b:"印",  nm:"财破印"},
- {id:"y_st", a:"印",  b:"食伤",nm:"枭印夺食"},
- {id:"gs_bj",a:"官杀",b:"比劫",nm:"官杀攻身"},
- {id:"c_gs", a:"财",  b:"官杀",nm:"财生官"}
-];
-function interact(c){
- var out={},i;
- for(i=0;i<PAIRS.length;i++){var q=PAIRS[i],la=c.lv[q.a],lb=c.lv[q.b],g=gate(la,lb);
-  out[q.id]={nm:q.nm,a:q.a,b:q.b,la:la,lb:lb,g:g};}
- return out;
-}
+ return {use:true,k:0.5,t:"衰中·力薄，作用有限"};}
+var PAIRS=[{id:"st_gs",a:"食伤",b:"官杀",nm:"伤官见官"},{id:"bj_c",a:"比劫",b:"财",nm:"比劫夺财"},
+{id:"c_y",a:"财",b:"印",nm:"财破印"},{id:"y_st",a:"印",b:"食伤",nm:"枭印夺食"},
+{id:"gs_bj",a:"官杀",b:"比劫",nm:"官杀攻身"},{id:"c_gs",a:"财",b:"官杀",nm:"财生官"}];
+function interact(c){var out={},i;
+ for(i=0;i<PAIRS.length;i++){var q=PAIRS[i];out[q.id]={nm:q.nm,a:q.a,b:q.b,la:c.lv[q.a],lb:c.lv[q.b],g:gate(c.lv[q.a],c.lv[q.b])};}
+ return out;}
+function catOf(c,zhi){return S2C[ss(c.dg,HIDE[zhi][0][0])];}
+function favCat(c,k){return c.fav.indexOf(k)>=0;}
+function isFav(c,f){return favCat(c,catOf(c,f.z))||favCat(c,S2C[ss(c.dg,f.g)]);}
 
-/* ========== 命盘与流年特征 ========== */
+/* ===== 命盘 ===== */
 function basic(ec,lunar,solar,sex){
  var keys=["Year","Month","Day","Time"],P=[],i;
  for(i=0;i<4;i++){var k=keys[i];
-  P.push({gz:ec["get"+k](),gan:ec["get"+k+"Gan"](),zhi:ec["get"+k+"Zhi"](),
-   sh:ec["get"+k+"ShiShenGan"](),hid:ec["get"+k+"HideGan"]()||[],
-   hsh:ec["get"+k+"ShiShenZhi"]()||[],ny:ec["get"+k+"NaYin"](),
+  P.push({gz:ec["get"+k](),gan:ec["get"+k+"Gan"](),zhi:ec["get"+k+"Zhi"](),sh:ec["get"+k+"ShiShenGan"](),
+   hid:ec["get"+k+"HideGan"]()||[],hsh:ec["get"+k+"ShiShenZhi"]()||[],ny:ec["get"+k+"NaYin"](),
    kong:(function(){try{return ec["get"+k+"XunKong"]();}catch(e){return "-";}})()});}
  var jq="-";try{jq=lunar.getPrevJieQi(true).getName();}catch(e){}
  return {P:P,sex:sex,mate:sex===1?"财":"官杀",kid:sex===1?"官杀":"食伤",
-  zhis:[P[0].zhi,P[1].zhi,P[2].zhi,P[3].zhi],
-  lunar:lunar.toString(),solar:solar.toYmdHms(),sxiao:lunar.getYearShengXiao(),jq:jq};
-}
-function yinfo(B,year,dyGz){
- var gz=gzOf(year),g=gz.charAt(0),z=gz.charAt(1),i,NM=["年","月","日","时"],hit=[];
- for(i=0;i<4;i++){var zi=B.zhis[i];
-  if(CH[zi]===z){hit.push({t:"冲",p:i,s:NM[i]+"支"+zi+"逢"+z+"相冲"});}
-  else if(H6[zi]===z){hit.push({t:"合",p:i,s:NM[i]+"支"+zi+"与"+z+"六合"});}
-  else if(HAI[zi]===z){hit.push({t:"害",p:i,s:NM[i]+"支"+zi+"与"+z+"相害"});}
-  else if((zi==="子"&&z==="卯")||(zi==="卯"&&z==="子")){hit.push({t:"刑",p:i,s:NM[i]+"支"+zi+"与"+z+"相刑"});}}
- function at(p){for(var k=0;k<hit.length;k++){if(hit[k].p===p){return hit[k];}}return null;}
- return {year:year,gz:gz,g:g,z:z,dy:dyGz||"",hit:hit,hMon:at(1),hDay:at(2),hHour:at(3)};
-}
+  zhis:[P[0].zhi,P[1].zhi,P[2].zhi,P[3].zhi],lunar:lunar.toString(),solar:solar.toYmdHms(),
+  sxiao:lunar.getYearShengXiao(),jq:jq,byear:solar.getYear()};}
+/* 应期探测：actors=[{label,z}] */
+function probe(B,actors){
+ var NM=["年","月","日","时"],hit=[],i,j;
+ for(j=0;j<actors.length;j++){var A=actors[j];
+  for(i=0;i<4;i++){var zi=B.zhis[i],t=null;
+   if(CH[zi]===A.z){t="冲";}else if(H6[zi]===A.z){t="合";}
+   else if(HAI[zi]===A.z){t="害";}else if((zi==="子"&&A.z==="卯")||(zi==="卯"&&A.z==="子")){t="刑";}
+   if(t){hit.push({t:t,p:i,lay:A.label,w:LAYW[A.label]||1,s:A.label+A.z+t+NM[i]+"支"+zi});}}}
+ hit.sort(function(a,b){return b.w-a.w;});
+ function at(p){var k;for(k=0;k<hit.length;k++){if(hit[k].p===p){return hit[k];}}return null;}
+ return {hit:hit,hMon:at(1),hDay:at(2),hHour:at(3)};}
 
-/* ========== 分领域解读：子平 3 句 + 盲派 2 句 ========== */
+/* ===== 解读：子平3 + 盲派2 ===== */
 var READ={
-marriage:function(B,c,f,IT){
- var zp=[],mp=[],star=B.mate==="财"?"财星":"官星",dz=B.P[2].zhi,dzc=catOf(c,dz),i;
- zp.push(Z("日支"+dz+"为夫妻宫，宫内本气作"+dzc+"；"+star+"当年力量"+c.sc[B.mate].toFixed(1)+"（判<b>"+c.lv[B.mate]+"</b>），"+
-  (c.lv[B.mate]==="旺"?"配偶之事显于明处，机会多而须择":(c.lv[B.mate]==="衰"?"配偶星气弱，姻缘到得稍迟、宜重质":"配偶星中平，婚姻格局可守"))+"。"));
- zp.push(Z("日主"+c.state+"（帮身占比 "+(c.ratio*100).toFixed(0)+"%），"+
-  (c.state==="偏弱"?"身弱而"+star+"为耗，婚后多得配偶照应，然亦易受其左右":
-  (c.state==="偏旺"?"身旺能任"+star+"，于家中多居主位，宜多留意体贴":"身与"+star+"两停，相处之道在长久经营"))+"。"));
- zp.push(Z("流年"+f.gz+"之气：天干作"+ss(c.dg,f.g)+"、地支本气作"+ss(c.dg,HIDE[f.z][0][0])+"，"+
-  (isFav(c,f)?"落于喜用之位，感情上宜进":"不在喜用之位，感情上宜守")+"；今年五行以"+c.ord[0]+"最旺、"+c.ord[4]+"最弱。"));
+marriage:function(B,c,f,IT){var zp=[],mp=[],star=B.mate==="财"?"财星":"官星",dz=B.P[2].zhi;
+ zp.push(Z("日支"+dz+"为夫妻宫，宫内本气作"+catOf(c,dz)+"；"+star+f.W+"力量"+c.sc[B.mate].toFixed(1)+"（判<b>"+c.lv[B.mate]+"</b>），"+
+  (c.lv[B.mate]==="旺"?"配偶之事显于明处，机会多而须择":(c.lv[B.mate]==="衰"?"配偶星气弱，姻缘宜重质不重多":"配偶星中平，格局可守"))+"。"));
+ zp.push(Z("日主"+c.state+"（帮身 "+(c.ratio*100).toFixed(0)+"%），"+
+  (c.state==="偏弱"?"身弱而"+star+"为耗，多得配偶照应，亦易受其左右":
+  (c.state==="偏旺"?"身旺能任"+star+"，多居主位，宜多体贴":"身与"+star+"两停，相处在长久经营"))+"。"));
+ zp.push(Z(f.LBL+"之气：天干作"+ss(c.dg,f.g)+"、地支本气作"+ss(c.dg,HIDE[f.z][0][0])+"，"+
+  (isFav(c,f)?"落于喜用，感情宜进":"不在喜用，感情宜守")+"；"+f.W+"五行以"+c.ord[0]+"最旺、"+c.ord[4]+"最弱。"));
  var I=IT["st_gs"];
- if(B.sex===0&&I.g.use){mp.push(M("女命以官为夫："+I.nm+"，食伤"+I.la+"对官杀"+I.lb+"——"+I.g.t+
-  "，"+(I.g.k>=0.9?"口舌刚直易伤夫星，当年言语最须收敛":"作用有限，不致大碍")+"。"));}
- if(f.hDay){mp.push(M("夫妻宫应期：本年"+f.hDay.s+"，"+
+ if(B.sex===0&&I.g.use){mp.push(M("女命以官为夫："+I.nm+"，食伤"+I.la+"对官杀"+I.lb+"——"+I.g.t+"，"+
+  (I.g.k>=0.9?f.W+"言语最须收敛，刚直易伤夫星":"作用有限，不致大碍")+"。"));}
+ if(f.hDay){mp.push(M("夫妻宫应期："+f.W+f.hDay.s+"，"+
   (f.hDay.t==="冲"?"宫被冲动则起波澜，分合议论多，未婚者反有突起之缘":
   (f.hDay.t==="合"?"宫逢合则有进展，论婚、同居、置家之事易成":"宫受暗损，细故生嫌，宜明言勿积怨"))+"。"));}
- if(mp.length<2&&catOf(c,f.z)===B.mate){mp.push(M("流年地支引动"+star+"入命，"+(B.sex===1?"见女缘":"见男缘")+"之机显，然须辨真假。"));}
- if(mp.length<2){mp.push(M("本年"+(f.hit.length?"刑冲合不落夫妻宫":"与四柱无刑冲合")+"，感情无显著应期，功在日常而非一时。"));}
+ if(mp.length<2&&catOf(c,f.z)===B.mate){mp.push(M(f.LBL+"地支引动"+star+"入命，"+(B.sex===1?"见女缘":"见男缘")+"之机显，然须辨真假。"));}
+ if(mp.length<2){mp.push(M(f.W+"刑冲合不落夫妻宫，感情无显著应期，功在日常而非一时。"));}
  return {zp:zp,mp:mp};},
-wealth:function(B,c,f,IT){
- var zp=[],mp=[];
+wealth:function(B,c,f,IT){var zp=[],mp=[];
  zp.push(Z("财星"+c.sc["财"].toFixed(1)+"（<b>"+c.lv["财"]+"</b>）、食伤"+c.sc["食伤"].toFixed(1)+"（"+c.lv["食伤"]+"）："+
-  (c.lv["财"]==="旺"?"财气显露，取财有门路，惟易因财劳身":(c.lv["财"]==="衰"?"财星偏轻，须靠专长与积累，忌重注投机":"财气中平，稳中有进"))+
+  (c.lv["财"]==="旺"?"财气显露，取财有门路，惟易因财劳身":(c.lv["财"]==="衰"?"财星偏轻，须靠专长积累，忌重注投机":"财气中平，稳中有进"))+
   "，"+(c.lv["食伤"]==="旺"?"生财之源充足，技艺口才皆可换钱":"生财之源不厚，宜守本业")+"。"));
  zp.push(Z("日主"+c.state+"，"+(c.state==="偏弱"?"身弱不胜财，忌贪大借贷，先壮自身再图财":
-  (c.state==="偏旺"?"身旺能任财，宜开源拓展，财随动而来":"身财两停，取财在持续不在冒险"))+
-  "；喜用在"+c.fav.join("、")+"。"));
- zp.push(Z("流年"+f.gz+"：天干"+ss(c.dg,f.g)+"、地支"+ss(c.dg,HIDE[f.z][0][0])+"，"+
-  (isFav(c,f)?"流年之气入喜用，进项之机较明":"流年不助喜用，此年重布局而不重收成")+
-  (f.dy?("；大运"+f.dy+"同参，运气底色"+(favCat(c,catOf(c,f.dy.charAt(1)))?"相宜":"偏逆")+"。"):"。")));
+  (c.state==="偏旺"?"身旺能任财，宜开源拓展，财随动而来":"身财两停，取财在持续不在冒险"))+"；喜用在"+c.fav.join("、")+"。"));
+ zp.push(Z(f.LBL+"：天干"+ss(c.dg,f.g)+"、地支"+ss(c.dg,HIDE[f.z][0][0])+"，"+
+  (isFav(c,f)?"入喜用，进项之机较明":"不助喜用，重布局不重收成")+(f.dy?("；大运"+f.dy+"同参，底色"+(favCat(c,catOf(c,f.dy.charAt(1)))?"相宜":"偏逆")+"。"):"。")));
  var I=IT["bj_c"];
  if(I.g.use){mp.push(M(I.nm+"：比劫"+I.la+"对财"+I.lb+"——"+I.g.t+"，"+
   (I.g.k>=0.9?"财易被分、被借、被合伙稀释，账目股权务必分明，少做人情担保":
   (I.g.k>=0.6?"略有分夺之象，合作须立字据":"分夺之力不足，财可自守"))+"。"));}
  var I2=IT["c_gs"];
  if(I2.g.use&&mp.length<2){mp.push(M("财生官：财"+I2.la+"生官杀"+I2.lb+"——"+I2.g.t+"，"+
-  (I2.g.k>=0.9?"以财换位、以利得权之象，花钱办事有效":"生扶之力平平，不必强求")+"。"));}
- if(mp.length<2&&f.hMon){mp.push(M("月令应期：本年"+f.hMon.s+"，月令为大，"+
-  (f.hMon.t==="冲"?"职场或生意格局动摇，宜守成防变，不轻转行":"格局有合作升迁之机，可顺势推进")+"。"));}
- if(mp.length<2){mp.push(M("本年无财事显著应期，宜积累客源与技艺，待后运而发。"));}
+  (I2.g.k>=0.9?"以财换位、以利得权之象，花钱办事有效":"生扶平平，不必强求")+"。"));}
+ if(mp.length<2&&f.hMon){mp.push(M("月令应期："+f.W+f.hMon.s+"，月令为大，"+
+  (f.hMon.t==="冲"?"职场或生意格局动摇，宜守成防变":"格局有合作推进之机")+"。"));}
+ if(mp.length<2){mp.push(M(f.W+"无财事显著应期，宜积累客源与技艺。"));}
  return {zp:zp,mp:mp};},
-child:function(B,c,f,IT){
- var zp=[],mp=[],hz=B.P[3].zhi,hc=catOf(c,hz);
- zp.push(Z("时柱"+B.P[3].gz+"为子女宫，宫内本气作"+hc+"；子星（"+B.kid+"）力量"+c.sc[B.kid].toFixed(1)+"（<b>"+c.lv[B.kid]+"</b>），"+
-  (c.lv[B.kid]==="旺"?"子息气旺，缘分不薄":(c.lv[B.kid]==="衰"?"子星偏弱，子女之事来得稍迟，宜顺时不强求":"子息中平"))+"。"));
- zp.push(Z("时支"+hz+"与日支"+B.P[2].zhi+(CH[hz]===B.P[2].zhi?"相冲，亲子间易有代沟争执":"无冲，相处和顺")+
-  "；日主"+c.state+"，"+(c.state==="偏弱"?"养育上心力易不足，宜借家人之助":"于子女多居主导，宜留三分余地")+"。"));
- zp.push(Z("本年子星之气"+(favCat(c,B.kid)?"在喜用之列，与子女之事较顺":"不在喜用之列，相处宜多忍让")+
-  "；全局"+c.ord[0]+"旺"+c.ord[4]+"弱，子女性情近"+(["木","火"].indexOf(ZE[hz])>=0?"显扬好动":"沉稳内守")+"，宜顺其性而教。"));
+child:function(B,c,f,IT){var zp=[],mp=[],hz=B.P[3].zhi;
+ zp.push(Z("时柱"+B.P[3].gz+"为子女宫，宫内本气作"+catOf(c,hz)+"；子星（"+B.kid+"）"+c.sc[B.kid].toFixed(1)+"（<b>"+c.lv[B.kid]+"</b>），"+
+  (c.lv[B.kid]==="旺"?"子息气旺，缘分不薄":(c.lv[B.kid]==="衰"?"子星偏弱，宜顺时不强求":"子息中平"))+"。"));
+ zp.push(Z("时支"+hz+"与日支"+B.P[2].zhi+(CH[hz]===B.P[2].zhi?"相冲，亲子易有代沟争执":"无冲，相处和顺")+
+  "；日主"+c.state+"，"+(c.state==="偏弱"?"养育心力易不足，宜借家人之助":"于子女多居主导，宜留三分余地")+"。"));
+ zp.push(Z(f.W+"子星之气"+(favCat(c,B.kid)?"在喜用之列，与子女之事较顺":"不在喜用之列，相处宜多忍让")+
+  "；子女性情近"+(["木","火"].indexOf(ZE[hz])>=0?"显扬好动":"沉稳内守")+"，宜顺其性而教。"));
  var I=IT["y_st"];
  if(B.sex===0&&I.g.use){mp.push(M("女命以食伤为子："+I.nm+"，印"+I.la+"对食伤"+I.lb+"——"+I.g.t+"，"+
-  (I.g.k>=0.9?"长辈干预或自身思虑过重，于子女之事反成阻力":"影响有限")+"。"));}
- if(f.hHour){mp.push(M("子女宫应期：本年"+f.hHour.s+"，"+
+  (I.g.k>=0.9?"长辈干预或思虑过重，于子女之事反成阻力":"影响有限")+"。"));}
+ if(f.hHour){mp.push(M("子女宫应期："+f.W+f.hHour.s+"，"+
   (f.hHour.t==="冲"?"子女学业健康或远行之事多操心，宜多沟通少施压":
   (f.hHour.t==="合"?"添丁、入学、子女喜事之机较显":"小有不顺，留意饮食起居"))+"。"));}
- if(mp.length<2&&catOf(c,f.z)===B.kid){mp.push(M("流年地支引动子星，求子或子女之事皆在应期内，宜调养身体。"));}
- if(mp.length<2){mp.push(M("本年子女宫未被引动，诸事平顺，重在陪伴与习惯养成。"));}
+ if(mp.length<2&&catOf(c,f.z)===B.kid){mp.push(M(f.LBL+"引动子星，子女之事在应期内，宜调养身体。"));}
+ if(mp.length<2){mp.push(M(f.W+"子女宫未被引动，诸事平顺，重在陪伴与习惯养成。"));}
  return {zp:zp,mp:mp};},
-career:function(B,c,f,IT){
- var zp=[],mp=[],gs=c.sc["官杀"],yin=c.sc["印"],st=c.sc["食伤"];
+career:function(B,c,f,IT){var zp=[],mp=[],gs=c.sc["官杀"],yin=c.sc["印"],st=c.sc["食伤"];
  var lead=gs>=Math.max(yin,st)?"官杀":(yin>=st?"印":"食伤");
  var LM={"官杀":"官杀为纲——宜体制、管理、规范明确之事，升迁靠资历与担当",
  "印":"印星为纲——宜专业、教育、技术、文书之路，靠学历资格立身",
  "食伤":"食伤为纲——宜技艺、创作、销售、自媒体一类靠本事说话之事"};
  zp.push(Z("月令"+B.P[1].zhi+"作"+catOf(c,B.P[1].zhi)+"，月令为大，取用以"+LM[lead]+"。"));
  zp.push(Z("官杀"+gs.toFixed(1)+"（"+c.lv["官杀"]+"）、印"+yin.toFixed(1)+"（"+c.lv["印"]+"）、食伤"+st.toFixed(1)+"（"+c.lv["食伤"]+"）："+
-  (c.lv["官杀"]==="旺"&&c.lv["印"]==="衰"?"压力重而无印化泄，易操劳受制，宜补学历、找靠山、分担责任":
-  (c.lv["官杀"]==="衰"&&c.lv["食伤"]==="旺"?"官弱伤旺，不受管束，自主创业或技术专精更合":"结构尚匀，可在组织内稳步而上"))+"。"));
- zp.push(Z("流年"+f.gz+(f.dy?"、大运"+f.dy:"")+"：天干"+ss(c.dg,f.g)+"、地支"+ss(c.dg,HIDE[f.z][0][0])+"，"+
-  (isFav(c,f)?"入喜用，可积极争取":"不入喜用，宜做实事攒口碑，变动不宜大")+
-  "；行业取向近"+IND[c.ord[0]]+"一类。"));
+  (c.lv["官杀"]==="旺"&&c.lv["印"]==="衰"?"压力重而无印化泄，宜补学历、找靠山、分担责任":
+  (c.lv["官杀"]==="衰"&&c.lv["食伤"]==="旺"?"官弱伤旺，不受管束，自主或技术专精更合":"结构尚匀，可稳步而上"))+"。"));
+ zp.push(Z(f.LBL+(f.dy?"、大运"+f.dy:"")+"：天干"+ss(c.dg,f.g)+"、地支"+ss(c.dg,HIDE[f.z][0][0])+"，"+
+  (isFav(c,f)?"入喜用，可积极争取":"不入喜用，宜做实事攒口碑，变动不宜大")+"；行业取向近"+IND[c.ord[0]]+"一类。"));
  var I=IT["st_gs"];
  if(I.g.use){mp.push(M(I.nm+"：食伤"+I.la+"对官杀"+I.lb+"——"+I.g.t+"，"+
-  (I.g.k>=0.9?(I.la==="旺"?"才气压过规矩，易与上位者相抗，当年言语文书最须谨慎":"力微犯强，顶撞必自损，宜顺不宜争"):
+  (I.g.k>=0.9?(I.la==="旺"?"才气压过规矩，易与上位者相抗，"+f.W+"言语文书最须谨慎":"力微犯强，顶撞必自损，宜顺不宜争"):
   (I.g.k>=0.6?"小有抵触，分寸自持即可":"相持为平，不必过虑"))+"。"));}
  var I2=IT["gs_bj"];
  if(I2.g.use&&mp.length<2){mp.push(M("官杀攻身：官杀"+I2.la+"对身"+I2.lb+"——"+I2.g.t+"，"+
   (I2.g.k>=0.9?"责任压身，考核调整之事临头，宜借印（资格、靠山）化之":"压力在可承之内")+"。"));}
- if(mp.length<2&&f.hMon){mp.push(M("月令应期：本年"+f.hMon.s+"，事业宫受动，"+(f.hMon.t==="冲"?"职位或环境有迁动之象":"有合作与提携之机")+"。"));}
- if(mp.length<2){mp.push(M("本年事业宫未被引动，无大起落，宜积累资历。"));}
+ if(mp.length<2&&f.hMon){mp.push(M("事业宫应期："+f.W+f.hMon.s+"，"+(f.hMon.t==="冲"?"职位或环境有迁动之象":"有合作与提携之机")+"。"));}
+ if(mp.length<2){mp.push(M(f.W+"事业宫未被引动，无大起落，宜积累资历。"));}
  return {zp:zp,mp:mp};},
-health:function(B,c,f,IT){
- var zp=[],mp=[],wk=c.ord[4],sg=c.ord[0],i,cg=[];
+health:function(B,c,f,IT){var zp=[],mp=[],wk=c.ord[4],sg=c.ord[0],i,cg=[];
  zp.push(Z("合冲刑会调整后，五行以"+sg+"最旺（"+c.wx[sg].toFixed(1)+"）、"+wk+"最弱（"+c.wx[wk].toFixed(1)+
   "）。偏枯之处最须留意："+ORG[wk]+"；"+sg+"过旺亦易反伤"+ORG[KEE[sg]]+"。"));
  zp.push(Z("日主"+c.state+"，"+(c.state==="偏弱"?"元气不足，忌熬夜过劳，宜缓步养气":
   (c.state==="偏旺"?"气盛须宣泄，宜规律运动出汗，郁而不发反生病":"禀赋平和，守住作息即可少病"))+
-  "；今年调养以补"+wk+"为主："+TIP[wk]+"。"));
- zp.push(Z("流年"+f.gz+"地支属"+ZE[f.z]+"，于本命"+(favCat(c,catOf(c,f.z))?"属喜用，气机相扶":"属忌，须防其所主之患")+
+  "；"+f.W+"调养以补"+wk+"为主："+TIP[wk]+"。"));
+ zp.push(Z(f.LBL+"地支属"+ZE[f.z]+"，于本命"+(favCat(c,catOf(c,f.z))?"属喜用，气机相扶":"属忌，须防其所主之患")+
   "，相关为"+ORG[ZE[f.z]]+"。"));
  for(i=0;i<c.ev.length;i++){if(c.ev[i].c==="e2"){cg.push(c.ev[i].s.replace(/<[^>]+>/g,""));}}
- if(cg.length){mp.push(M("冲刑为病之门户——"+cg[0].split("　")[0]+"，此处所主之脏腑须按时检查，并防跌碰与旧伤复发。"));}
+ if(cg.length){mp.push(M("冲刑为病之门户——"+cg[0].split("　")[0]+"，此处所主脏腑须按时检查，并防跌碰与旧伤复发。"));}
  var I=IT["gs_bj"];
  if(I.g.use&&mp.length<2){mp.push(M("官杀攻身："+I.g.t+"，"+(I.g.k>=0.9?"压力直接作用于身，睡眠与血压最先示警":"身尚能受，注意节律即可")+"。"));}
- if(mp.length<2&&f.hit.length){mp.push(M("本年"+f.hit[0].s+"，"+ORG[ZE[f.z]]+"易起反应，宜趁势做一次系统体检。"));}
- if(mp.length<2){mp.push(M("本年无显著冲刑应期，所患多由积习而来，重在改惯不在求药。"));}
+ if(mp.length<2&&f.hit.length){mp.push(M(f.W+f.hit[0].s+"，"+ORG[ZE[f.z]]+"易起反应，宜趁势调理。"));}
+ if(mp.length<2){mp.push(M(f.W+"无显著冲刑应期，所患多由积习而来，重在改惯不在求药。"));}
  return {zp:zp,mp:mp};}
 };
-function catOf(c,zhi){var g=HIDE[zhi][0][0],s=ss(c.dg,g);
- return {"比肩":"比劫","劫财":"比劫","食神":"食伤","伤官":"食伤","正财":"财","偏财":"财","正官":"官杀","七杀":"官杀","正印":"印","偏印":"印"}[s];}
-function favCat(c,k){return c.fav.indexOf(k)>=0;}
-function isFav(c,f){return favCat(c,catOf(c,f.z))||favCat(c,{"比肩":"比劫","劫财":"比劫","食神":"食伤","伤官":"食伤","正财":"财","偏财":"财","正官":"官杀","七杀":"官杀","正印":"印","偏印":"印"}[ss(c.dg,f.g)]);}
+function score(c,f,IT){
+ var zpS=50+(isFav(c,f)?18:-14)+(c.state==="中和"?6:0),mpS=50,k;
+ for(k=0;k<f.hit.length;k++){var h=f.hit[k],d=(h.t==="合"?9:(h.t==="冲"?-11:-5));mpS+=d*h.w;}
+ if(IT["st_gs"].g.use&&IT["st_gs"].g.k>=0.9){mpS-=8;}
+ if(IT["c_gs"].g.use&&IT["c_gs"].g.k>=0.9){mpS+=7;}
+ if(IT["bj_c"].g.use&&IT["bj_c"].g.k>=0.9){mpS-=6;}
+ zpS=Math.max(5,Math.min(95,Math.round(zpS)));mpS=Math.max(5,Math.min(95,Math.round(mpS)));
+ return {zp:zpS,mp:mpS,tot:Math.round(W_ZP*zpS+W_MP*mpS)};}
+/* 取某日的流年流月流日 */
+function dayGZ(y,m,d){var t=Solar.fromYmdHms(y,m,d,12,0,0).getLunar().getEightChar();
+ return {Y:t.getYear(),M:t.getMonth(),D:t.getDay(),Mz:t.getMonthZhi(),Dz:t.getDayZhi(),Dg:t.getDayGan(),
+  Yz:t.getYearZhi(),Yg:t.getYearGan(),Mg:t.getMonthGan()};}
 
-/* ========== 主流程 ========== */
+/* ===== 主流程 ===== */
 function run(){
  $("msg").textContent="";$("out").innerHTML="";
  try{
   if(typeof Solar==="undefined"){$("msg").textContent="历法库未加载，请联网后刷新页面。";return;}
   var sex=parseInt($("sx").querySelector(".on").getAttribute("data-v"),10);
   var lf=$("lf").querySelector(".on").getAttribute("data-v");
-  var tp=($("tm").value||"12:00").split(":"),hh=parseInt(tp[0],10),mi=parseInt(tp[1],10),solar,i,j;
+  var mode=$("md").querySelector(".on").getAttribute("data-v");
+  var tp=($("tm").value||"12:00").split(":"),hh=parseInt(tp[0],10),mi=parseInt(tp[1],10),solar,i,j,k;
   if(lf==="s"){if(!$("sd").value){$("msg").textContent="请选择出生日期。";return;}
-   var d=$("sd").value.split("-");solar=Solar.fromYmdHms(+d[0],+d[1],+d[2],hh,mi,0);
-  }else{var y=parseInt($("ly").value,10),m=parseInt($("lm").value,10),dd=parseInt($("ld").value,10);
-   if(!y){$("msg").textContent="请填写农历年份。";return;}
-   if($("lp").checked){m=-m;}solar=Lunar.fromYmdHms(y,m,dd,hh,mi,0).getSolar();}
+   var dd0=$("sd").value.split("-");solar=Solar.fromYmdHms(+dd0[0],+dd0[1],+dd0[2],hh,mi,0);
+  }else{var yy=parseInt($("ly").value,10),mm0=parseInt($("lm").value,10),dd1=parseInt($("ld").value,10);
+   if(!yy){$("msg").textContent="请填写农历年份。";return;}
+   if($("lp").checked){mm0=-mm0;}solar=Lunar.fromYmdHms(yy,mm0,dd1,hh,mi,0).getSolar();}
   var lunar=solar.getLunar(),ec=lunar.getEightChar(),B=basic(ec,lunar,solar,sex);
-  var monB=B.P[1].zhi, C=calc(B.P,[],monB,null), ITC=interact(C);
+  var monB=B.P[1].zhi,C=calc(B.P,[],[{z:monB,w:1}]),ITC=interact(C);
   var ds=$("dm").getElementsByClassName("on"),doms=[];
   for(i=0;i<ds.length;i++){doms.push(ds[i].getAttribute("data-k"));}
   if(!doms.length){doms=["marriage","wealth","career"];}
   var yun=null,dys=[];try{yun=ec.getYun(sex);dys=yun.getDaYun();}catch(e){}
+  function dyGz(yy2){for(var q=0;q<dys.length;q++){if(yy2>=dys[q].getStartYear()&&yy2<=dys[q].getEndYear()){return dys[q].getGanZhi()||"";}}return "";}
 
   /* 命盘 */
   var NM=["年 柱","月 柱","日 柱","时 柱"],GL=["祖上·根基","父母·事业宫","自身·夫妻宫","子女·晚景"],th="";
   for(i=0;i<4;i++){th+="<th>"+NM[i]+'<br><span style="font-weight:400;color:#9c9087;font-size:10px">'+GL[i]+"</span></th>";}
-  function row(t,fn){var s='<tr><th class="rh">'+t+"</th>",k;
-   for(k=0;k<4;k++){s+="<td>"+fn(B.P[k])+"</td>";}return s+"</tr>";}
+  function row(t,fn){var s='<tr><th class="rh">'+t+"</th>",q;
+   for(q=0;q<4;q++){s+="<td>"+fn(B.P[q])+"</td>";}return s+"</tr>";}
   var html='<div class="card"><div class="h">命 盘</div><div class="meta">阳历 <b>'+B.solar+"</b>　农历 <b>"+B.lunar+
   "</b><br><i>"+(sex===1?"男命":"女命")+"</i>　生肖 <b>"+B.sxiao+"</b>　节气 <b>"+B.jq+"</b>　日主 <b>"+C.dg+"（"+C.de+
-  "）</b>　身<b>"+C.state+"</b>　月令 <b>"+monB+"</b>（司令"+(function(){var t="",k;for(k=0;k<5;k++){if(C.mm[EL5[k]]>=1.35){t=EL5[k];}}return t||"土";})()+
-  '）</div><table style="margin-top:12px"><tr><th class="rh"></th>'+th+"</tr>"+
+  "）</b>　身<b>"+C.state+"</b>　命局月令 <b>"+monB+'</b></div><table style="margin-top:12px"><tr><th class="rh"></th>'+th+"</tr>"+
   row("干支",function(p){return '<span class="gz">'+p.gz.charAt(0)+"<br>"+p.gz.charAt(1)+"</span>";})+
   row("十神",function(p){return p.sh;})+row("藏干",function(p){return p.hid.join(" ")||"-";})+
   row("支十神",function(p){return p.hsh.join("<br>")||"-";})+row("纳音",function(p){return p.ny;})+
   row("空亡",function(p){return p.kong;})+"</table></div>";
 
   /* 合冲刑会 */
-  html+='<div class="card"><div class="h">合 冲 刑 会 — 能 量 重 算</div>';
+  html+='<div class="card"><div class="h">命 局 合 冲 刑 会</div>';
   if(C.ev.length){html+='<ul class="evt">';
-   for(i=0;i<C.ev.length;i++){html+='<li class="'+C.ev[i].c+'">'+C.ev[i].s+"</li>";}
-   html+="</ul>";}
-  else{html+='<div class="meta">命局地支之间无三会、三合、半合、六冲、三刑、子卯刑、自刑、六害、六合，天干亦无相合——各柱独立取用。</div>';}
-  html+='<div class="hint">说明：三会 +'+K_SANHUI+"、三合 +"+K_SANHE+"、半合 +"+K_BANHE+"（按参与两三支之力加成于化神）；冲为强者×"+F_CHONG_HI+
-  "、弱者×"+F_CHONG_LO+"；三刑×"+F_XING3+"；子卯刑与自刑×"+F_XING2+"；害×"+F_HAI+"；六合×"+F_LIUHE+"并化气；天干合×"+F_GANHE+"。系数在源码顶部可调。</div></div>";
+   for(i=0;i<C.ev.length;i++){html+='<li class="'+C.ev[i].c+'">'+C.ev[i].s+"</li>";}html+="</ul>";}
+  else{html+='<div class="meta">命局之内无三会、三合、半合、六冲、三刑、子卯刑、自刑、六害、六合，天干亦无相合。</div>';}
+  html+='<div class="hint">系数：三会+'+K_SANHUI+"／三合+"+K_SANHE+"／半合+"+K_BANHE+"；冲强者×"+F_CHONG_HI+"、弱者×"+F_CHONG_LO+
+  "；三刑×"+F_XING3+"；子卯刑与自刑×"+F_XING2+"；害×"+F_HAI+"；六合×"+F_LIUHE+"并化气；干合×"+F_GANHE+"。源码顶部可调。</div></div>";
 
   /* 五行 */
   var mx=1;for(i=0;i<5;i++){if(C.wx[EL5[i]]>mx){mx=C.wx[EL5[i]];}if(C.wxRaw[EL5[i]]>mx){mx=C.wxRaw[EL5[i]];}}
   html+='<div class="card"><div class="h">五 行 能 量（虚线＝未计合冲之基础值）</div><div class="bars">';
-  for(i=0;i<5;i++){var el=EL5[i],a=C.wxRaw[el],b2=C.wx[el],dv=b2-a;
+  for(i=0;i<5;i++){var el=EL5[i],a2=C.wxRaw[el],b2=C.wx[el],dv=b2-a2;
    html+="<span>"+el+'</span><span class="bar"><i class="'+WC[el]+'" style="width:'+Math.min(100,b2/mx*100)+
-   '%"></i><u style="width:'+Math.min(100,a/mx*100)+'%"></u></span><span class="meta">'+b2.toFixed(1)+
+   '%"></i><u style="width:'+Math.min(100,a2/mx*100)+'%"></u></span><span class="meta">'+b2.toFixed(1)+
    ' <span class="'+(dv>=0.05?"up":(dv<=-0.05?"dn":""))+'" style="font-size:11px">'+(dv>=0.05?"▲":(dv<=-0.05?"▼":"＝"))+Math.abs(dv).toFixed(1)+"</span></span>";}
   var sl=[];for(i=0;i<5;i++){sl.push(SK[i]+" <b>"+C.sc[SK[i]].toFixed(1)+"</b>（"+C.lv[SK[i]]+"）");}
   html+='</div><div class="meta" style="margin-top:10px">十神：'+sl.join("　")+"<br>帮身占比 <b>"+(C.ratio*100).toFixed(0)+
-  "%</b> → 判<i>"+C.state+"</i>，喜用取 <b>"+C.fav.join("、")+"</b></div>";
-  html+='<div class="h" style="margin:14px 0 8px">十 神 交 互（按旺衰配对定取舍）</div><ul class="evt">';
-  var any=false;
-  for(i=0;i<PAIRS.length;i++){var q=PAIRS[i],I=ITC[q.id];
-   if(!I.g.use){html+='<li style="opacity:.45">'+q.nm+"（"+q.a+I.la+" / "+q.b+I.lb+"）── "+I.g.t+"，不出断语</li>";continue;}
-   any=true;html+='<li class="'+(I.g.k>=0.9?"e2":"e3")+'"><b>'+q.nm+"</b>（"+q.a+I.la+" → "+q.b+I.lb+"）── "+I.g.t+"，作用力 "+I.g.k.toFixed(1)+"</li>";}
-  html+="</ul>"+(any?"":'<div class="meta">无达到门限的交互。</div>')+"</div>";
+  "%</b> → 判<i>"+C.state+"</i>，喜用取 <b>"+C.fav.join("、")+'</b></div><div class="h" style="margin:14px 0 8px">十 神 交 互（旺衰配对门限）</div><ul class="evt">';
+  for(i=0;i<PAIRS.length;i++){var q2=PAIRS[i],I0=ITC[q2.id];
+   if(!I0.g.use){html+='<li style="opacity:.45">'+q2.nm+"（"+q2.a+I0.la+" / "+q2.b+I0.lb+"）── "+I0.g.t+"，不出断语</li>";continue;}
+   html+='<li class="'+(I0.g.k>=0.9?"e2":"e3")+'"><b>'+q2.nm+"</b>（"+q2.a+I0.la+" → "+q2.b+I0.lb+"）── "+I0.g.t+"，作用力 "+I0.g.k.toFixed(1)+"</li>";}
+  html+="</ul></div>";
 
   /* 大运 */
   var cy=new Date().getFullYear(),ci=-1;
@@ -509,58 +482,128 @@ function run(){
     html+='<div class="dy'+(i===(ci<0?0:ci)?" on":"")+'" data-i="'+i+'"><b>'+(x.getGanZhi()||"小运")+"</b>"+
     x.getStartAge()+"–"+x.getEndAge()+"岁<br>"+x.getStartYear()+"年起"+(i===ci?'<br><span style="color:#d9b36a">当前</span>':"")+"</div>";}
    html+='</div><div class="h" style="margin:14px 0 8px">流 年</div><div class="ln" id="lnBox"></div></div>';}
-  function dyGz(yy){var k;for(k=0;k<dys.length;k++){if(yy>=dys[k].getStartYear()&&yy<=dys[k].getEndYear()){return dys[k].getGanZhi()||"";}}return "";}
 
-  /* 去年 今年 明年 */
-  var items=[[cy-1,"去年",""],[cy,"今年","now"],[cy+1,"明年",""]];
-  html+='<div class="card"><div class="h">去 年 · 今 年 · 明 年（子平 '+(W_ZP*100)+'% ＋ 盲派 '+(W_MP*100)+'%）</div><div class="yr">';
-  for(i=0;i<3;i++){
-   var it=items[i],dg2=dyGz(it[0]),f=yinfo(B,it[0],dg2),ex=[];
-   if(dg2){ex.push({g:dg2.charAt(0),z:dg2.charAt(1),label:"大运"});}
-   ex.push({g:f.g,z:f.z,label:"流年"});
-   var CY=calc(B.P,ex,monB,f.z), IT=interact(CY), hs=[],k;
-   for(k=0;k<f.hit.length;k++){hs.push(f.hit[k].s);}
-   /* 评分 */
-   var zpS=50+(isFav(CY,f)?18:-14)+(CY.state==="中和"?6:0);
-   var mpS=50,ke;
-   for(k=0;k<f.hit.length;k++){ke=f.hit[k].t;mpS+=(ke==="合"?9:(ke==="冲"?-11:-5));}
-   if(IT["st_gs"].g.use&&IT["st_gs"].g.k>=0.9){mpS-=8;}
-   if(IT["c_gs"].g.use&&IT["c_gs"].g.k>=0.9){mpS+=7;}
-   if(IT["bj_c"].g.use&&IT["bj_c"].g.k>=0.9){mpS-=6;}
-   zpS=Math.max(5,Math.min(95,zpS));mpS=Math.max(5,Math.min(95,mpS));
-   var tot2=Math.round(W_ZP*zpS+W_MP*mpS);
-   html+='<div class="yb '+it[2]+'"><div class="yt">'+it[1]+"　"+it[0]+" 年<span>虚岁 "+(it[0]-solar.getYear()+1)+
-   '</span></div><div class="ygz">'+f.gz+"<em>"+ss(C.dg,f.g)+"／"+ss(C.dg,HIDE[f.z][0][0])+(dg2?"　大运 "+dg2:"")+"</em></div>"+
-   '<div class="meta" style="font-size:12px">'+(hs.length?hs.join("；"):"与四柱无刑冲合")+
-   "<br>流年月令并参后：日主<i>"+CY.state+"</i>（帮身 "+(CY.ratio*100).toFixed(0)+"%），当令五行 <b>"+CY.ord[0]+"</b></div>"+
-   '<div class="sb"><span>综合</span><span class="t"><i style="width:'+tot2+'%"></i></span><span>'+tot2+
-   " 分</span></div><div class=\"pr\">子平 "+zpS+" × "+W_ZP+"　＋　盲派 "+mpS+" × "+W_MP+"</div>";
-   for(k=0;k<doms.length;k++){var dk=doms[k],R=READ[dk](B,CY,f,IT),out=[],t2;
-    for(t2=0;t2<3&&t2<R.zp.length;t2++){out.push(R.zp[t2]);}
-    for(t2=0;t2<2&&t2<R.mp.length;t2++){out.push(R.mp[t2]);}
-    html+='<div class="dom"><div class="dn2">'+DNM[dk]+"</div>"+out.join("")+"</div>";}
-   html+="</div>";}
-  html+="</div></div>";
+  if(mode==="y"){
+   /* ===== 年视角 ===== */
+   var items=[[cy-1,"去年",""],[cy,"今年","now"],[cy+1,"明年",""]];
+   html+='<div class="card"><div class="h">去 年 · 今 年 · 明 年（子平 '+(W_ZP*100)+'% ＋ 盲派 '+(W_MP*100)+'%）</div><div class="yr">';
+   for(i=0;i<3;i++){
+    var it=items[i],dg2=dyGz(it[0]),gzz=GANS.charAt(((it[0]-4)%10+10)%10)+ZHIS.charAt(((it[0]-4)%12+12)%12);
+    var ex=[];if(dg2){ex.push({g:dg2.charAt(0),z:dg2.charAt(1),label:"大运"});}
+    ex.push({g:gzz.charAt(0),z:gzz.charAt(1),label:"流年"});
+    var CY=calc(B.P,ex,[{z:monB,w:1-MON_YEAR_W},{z:gzz.charAt(1),w:MON_YEAR_W}]);
+    var PR=probe(B,[{label:"流年",z:gzz.charAt(1)}]);
+    var f={g:gzz.charAt(0),z:gzz.charAt(1),gz:gzz,dy:dg2,hit:PR.hit,hMon:PR.hMon,hDay:PR.hDay,hHour:PR.hHour,
+     W:"本年",LBL:"流年"+gzz};
+    var IT=interact(CY),S=score(CY,f,IT),hs=[];
+    for(k=0;k<f.hit.length;k++){hs.push(f.hit[k].s);}
+    html+='<div class="yb '+it[2]+'"><div class="yt">'+it[1]+"　"+it[0]+" 年<span>虚岁 "+(it[0]-B.byear+1)+
+    '</span></div><div class="ygz">'+gzz+"<em>"+ss(C.dg,f.g)+"／"+ss(C.dg,HIDE[f.z][0][0])+(dg2?"　大运 "+dg2:"")+"</em></div>"+
+    '<div class="meta" style="font-size:12px">'+(hs.length?hs.join("；"):"与四柱无刑冲合")+
+    "<br>流年月令并参后：日主<i>"+CY.state+"</i>（帮身 "+(CY.ratio*100).toFixed(0)+"%），当令 <b>"+CY.ord[0]+"</b></div>"+
+    '<div class="sb"><span>综合</span><span class="t"><i style="width:'+S.tot+'%"></i></span><span>'+S.tot+
+    ' 分</span></div><div class="pr">子平 '+S.zp+" × "+W_ZP+"　＋　盲派 "+S.mp+" × "+W_MP+"</div>";
+    for(k=0;k<doms.length;k++){var dk=doms[k],R=READ[dk](B,CY,f,IT),ot=[],t3;
+     for(t3=0;t3<3&&t3<R.zp.length;t3++){ot.push(R.zp[t3]);}
+     for(t3=0;t3<2&&t3<R.mp.length;t3++){ot.push(R.mp[t3]);}
+     html+='<div class="dom"><div class="dn2">'+DNM[dk]+"</div>"+ot.join("")+"</div>";}
+    html+="</div>";}
+   html+="</div></div>";
+  }else{
+   /* ===== 指定日期视角：七柱 ===== */
+   if(!$("td").value){$("msg").textContent="请选择要看的日期。";return;}
+   var tv=$("td").value.split("-"),TY=+tv[0],TM=+tv[1],TD=+tv[2];
+   var G=dayGZ(TY,TM,TD),dyT=dyGz(TY);
+   var exD=[];if(dyT){exD.push({g:dyT.charAt(0),z:dyT.charAt(1),label:"大运"});}
+   exD.push({g:G.Yg,z:G.Yz,label:"流年"});exD.push({g:G.Mg,z:G.Mz,label:"流月"});exD.push({g:G.Dg,z:G.Dz,label:"流日"});
+   /* 月令：流日所在流月 0.7 + 命局月支 0.3 */
+   var CD=calc(B.P,exD,[{z:G.Mz,w:MON_DAY_W},{z:monB,w:1-MON_DAY_W}]);
+   var PRD=probe(B,[{label:"流年",z:G.Yz},{label:"流月",z:G.Mz},{label:"流日",z:G.Dz}]);
+   var fD={g:G.Dg,z:G.Dz,gz:G.D,dy:dyT,hit:PRD.hit,hMon:PRD.hMon,hDay:PRD.hDay,hHour:PRD.hHour,
+    W:"当日",LBL:"流日"+G.D};
+   var ITD=interact(CD),SD=score(CD,fD,ITD);
+   var tsolar=Solar.fromYmd(TY,TM,TD),tlun=tsolar.getLunar();
+   /* 运限四柱表 */
+   var LB=["大运","流年","流月","流日"],LV=[dyT||"—",G.Y,G.M,G.D],th2="",q3;
+   for(q3=0;q3<4;q3++){th2+="<th>"+LB[q3]+"</th>";}
+   function row2(t,fn){var s='<tr><th class="rh">'+t+"</th>",u;
+    for(u=0;u<4;u++){s+='<td'+(u===3?' class="hl"':'')+">"+(LV[u]==="—"?"—":fn(LV[u],u))+"</td>";}return s+"</tr>";}
+   html+='<div class="card"><div class="h">七 柱 — '+TY+" 年 "+TM+" 月 "+TD+' 日</div><div class="meta">农历 <b>'+tlun.toString()+
+   "</b>　虚岁 <b>"+(TY-B.byear+1)+"</b>　当日节气段 <b>"+(function(){try{return tlun.getPrevJieQi(true).getName();}catch(e){return "-";}})()+
+   "</b><br>取用月令：<b>流月 "+G.Mz+" × "+MON_DAY_W+"</b> ＋ 命局月令 "+monB+" × "+(1-MON_DAY_W).toFixed(1)+
+   '（流日所在之月为大）</div><table style="margin-top:12px"><tr><th class="rh"></th>'+th2+"</tr>"+
+   row2("干支",function(v){return '<span class="gz s">'+v.charAt(0)+"<br>"+v.charAt(1)+"</span>";})+
+   row2("十神",function(v){return ss(C.dg,v.charAt(0));})+
+   row2("支本气",function(v){return HIDE[v.charAt(1)][0][0]+"（"+ss(C.dg,HIDE[v.charAt(1)][0][0])+"）";})+
+   row2("五行",function(v){return E[v.charAt(0)]+"／"+ZE[v.charAt(1)];})+"</table>";
+   html+='<div class="h" style="margin:14px 0 8px">当 日 合 冲 刑 会（七柱同参）</div>';
+   if(CD.ev.length){html+='<ul class="evt">';
+    for(i=0;i<CD.ev.length;i++){html+='<li class="'+CD.ev[i].c+'">'+CD.ev[i].s+"</li>";}html+="</ul>";}
+   else{html+='<div class="meta">七柱之间无成立的合冲刑会。</div>';}
+   /* 五行（当日） */
+   var mx2=1;for(i=0;i<5;i++){if(CD.wx[EL5[i]]>mx2){mx2=CD.wx[EL5[i]];}if(CD.wxRaw[EL5[i]]>mx2){mx2=CD.wxRaw[EL5[i]];}}
+   html+='<div class="h" style="margin:14px 0 8px">当 日 五 行 能 量</div><div class="bars">';
+   for(i=0;i<5;i++){var el2=EL5[i],a3=CD.wxRaw[el2],b3=CD.wx[el2],dv2=b3-a3;
+    html+="<span>"+el2+'</span><span class="bar"><i class="'+WC[el2]+'" style="width:'+Math.min(100,b3/mx2*100)+
+    '%"></i><u style="width:'+Math.min(100,a3/mx2*100)+'%"></u></span><span class="meta">'+b3.toFixed(1)+
+    ' <span class="'+(dv2>=0.05?"up":(dv2<=-0.05?"dn":""))+'" style="font-size:11px">'+(dv2>=0.05?"▲":(dv2<=-0.05?"▼":"＝"))+Math.abs(dv2).toFixed(1)+"</span></span>";}
+   var sl2=[];for(i=0;i<5;i++){sl2.push(SK[i]+" <b>"+CD.sc[SK[i]].toFixed(1)+"</b>（"+CD.lv[SK[i]]+"）");}
+   html+='</div><div class="meta" style="margin-top:10px">十神：'+sl2.join("　")+"<br>日主<i>"+CD.state+"</i>（帮身 "+
+   (CD.ratio*100).toFixed(0)+"%），当令五行 <b>"+CD.ord[0]+"</b>，喜用 <b>"+CD.fav.join("、")+"</b></div>";
+   html+='<div class="sb" style="margin-top:12px"><span>当日综合</span><span class="t"><i style="width:'+SD.tot+
+   '%"></i></span><span>'+SD.tot+' 分</span></div><div class="pr">子平 '+SD.zp+" × "+W_ZP+"　＋　盲派 "+SD.mp+" × "+W_MP+
+   "　｜　应期权重：流日 "+LAYW["流日"]+"、流月 "+LAYW["流月"]+"、流年 "+LAYW["流年"]+"</div>";
+   if(PRD.hit.length){html+='<ul class="evt" style="margin-top:8px">';
+    for(i=0;i<PRD.hit.length;i++){var H=PRD.hit[i];
+     html+='<li class="'+(H.t==="合"?"e1":(H.t==="冲"?"e2":"e3"))+'"><b>'+H.s+"</b>（"+["年柱·祖上","月柱·事业宫","日柱·夫妻宫","时柱·子女宫"][H.p]+"，权重 "+H.w+"）</li>";}
+    html+="</ul>";}
+   else{html+='<div class="meta" style="margin-top:8px">流年、流月、流日三支与四柱均无刑冲合——当日平顺无显著应期。</div>';}
+   html+="</div>";
+   /* 分领域 */
+   html+='<div class="card"><div class="h">当 日 分 领 域 解 读（子平 '+(W_ZP*100)+'% ＋ 盲派 '+(W_MP*100)+'%）</div><div class="yr">';
+   for(k=0;k<doms.length;k++){var dk2=doms[k],R2=READ[dk2](B,CD,fD,ITD),ot2=[],t4;
+    for(t4=0;t4<3&&t4<R2.zp.length;t4++){ot2.push(R2.zp[t4]);}
+    for(t4=0;t4<2&&t4<R2.mp.length;t4++){ot2.push(R2.mp[t4]);}
+    html+='<div class="yb"><div class="yt">'+DNM[dk2]+"</div>"+ot2.join("")+"</div>";}
+   html+="</div></div>";
+   /* ±7 天 */
+   html+='<div class="card"><div class="h">前 后 七 日 比 较（点击可切换）</div><div class="scroll" id="d7">';
+   var base=new Date(TY,TM-1,TD);
+   for(i=-7;i<=7;i++){var nd=new Date(base.getTime()+i*864e5),ny=nd.getFullYear(),nm=nd.getMonth()+1,nnd=nd.getDate();
+    var G2=dayGZ(ny,nm,nnd),dy2=dyGz(ny),ex2=[];
+    if(dy2){ex2.push({g:dy2.charAt(0),z:dy2.charAt(1),label:"大运"});}
+    ex2.push({g:G2.Yg,z:G2.Yz,label:"流年"});ex2.push({g:G2.Mg,z:G2.Mz,label:"流月"});ex2.push({g:G2.Dg,z:G2.Dz,label:"流日"});
+    var C2=calc(B.P,ex2,[{z:G2.Mz,w:MON_DAY_W},{z:monB,w:1-MON_DAY_W}]);
+    var P2=probe(B,[{label:"流年",z:G2.Yz},{label:"流月",z:G2.Mz},{label:"流日",z:G2.Dz}]);
+    var f2={g:G2.Dg,z:G2.Dz,hit:P2.hit},S2=score(C2,f2,interact(C2));
+    var cl=S2.tot>=62?"up":(S2.tot<=42?"dn":"");
+    html+='<div class="d7'+(i===0?" on":"")+'" data-d="'+ny+"-"+pad(nm)+"-"+pad(nnd)+'">'+nm+"/"+nnd+"<b>"+G2.D+
+    '</b><span class="v '+cl+'">'+S2.tot+"</span></div>";}
+   html+='</div><div class="hint">分值＝子平 '+(W_ZP*100)+"% ＋ 盲派 "+(W_MP*100)+"%，仅作同一命盘内相邻日之相对比较，非绝对吉凶。</div></div>";
+  }
   $("out").innerHTML=html;
 
-  if(dys.length){
-   var show=function(idx){var arr=dys[idx].getLiuNian(),s="",k2;
-    for(k2=0;k2<arr.length;k2++){var l=arr[k2];
+  if(dys.length&&$("dyBar")){
+   var show=function(idx){var arr=dys[idx].getLiuNian(),s="",u;
+    for(u=0;u<arr.length;u++){var l=arr[u];
      s+="<span"+(l.getYear()===cy?' class="hi"':"")+">"+l.getYear()+" <b>"+l.getGanZhi()+"</b> "+l.getAge()+"岁</span>";}
     $("lnBox").innerHTML=s;
     var dd2=$("dyBar").getElementsByClassName("dy");
-    for(k2=0;k2<dd2.length;k2++){dd2[k2].className="dy"+(parseInt(dd2[k2].getAttribute("data-i"),10)===idx?" on":"");}};
+    for(u=0;u<dd2.length;u++){dd2[u].className="dy"+(parseInt(dd2[u].getAttribute("data-i"),10)===idx?" on":"");}};
    $("dyBar").addEventListener("click",function(e){var n=e.target;
     while(n&&n!==this&&(!n.className||n.className.indexOf("dy")<0)){n=n.parentNode;}
     if(n&&n!==this){show(parseInt(n.getAttribute("data-i"),10));}});
    show(ci<0?0:ci);}
+  if($("d7")){$("d7").addEventListener("click",function(e){var n=e.target;
+   while(n&&n!==this&&(!n.className||n.className.indexOf("d7")<0)){n=n.parentNode;}
+   if(n&&n!==this){$("td").value=n.getAttribute("data-d");run();window.scrollTo(0,document.body.scrollHeight);}});}
  }catch(err){$("msg").textContent="排盘出错："+err.message;}
 }
 $("go").addEventListener("click",run);
 if(typeof Solar==="undefined"){
- var sc2=document.createElement("script");sc2.src="https://unpkg.com/lunar-javascript/lunar.js";
- sc2.onload=run;sc2.onerror=function(){$("msg").textContent="历法库加载失败：请联网后刷新，或把 lunar.js 下载到同目录改为本地引用。";};
- document.head.appendChild(sc2);
+ var sc3=document.createElement("script");sc3.src="https://unpkg.com/lunar-javascript/lunar.js";
+ sc3.onload=run;sc3.onerror=function(){$("msg").textContent="历法库加载失败：请联网后刷新，或把 lunar.js 下载到同目录改为本地引用。";};
+ document.head.appendChild(sc3);
 }else{run();}
 </script>
 </body>
